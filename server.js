@@ -7,11 +7,11 @@ app.use(express.json());
 
 let FlaskResponse;
 
-// Serve static files from the frontend/public directory
-app.use(express.static(path.join(__dirname, 'Medi_buddy_chatbot-frontend', 'frontend', 'public')));
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Medi_buddy_chatbot-frontend', 'frontend', 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.post('/userinput', (req, res) => {
