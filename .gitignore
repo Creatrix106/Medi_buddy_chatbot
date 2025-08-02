@@ -93,7 +93,7 @@ dist
 
 # Gatsby files
 .cache/
-public
+# public  # Commented out to allow public directory for deployment
 
 # Storybook build outputs
 .out
