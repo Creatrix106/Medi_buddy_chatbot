@@ -5,11 +5,11 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy requirements and install dependencies
-COPY "Medi_Buddy_Chatbot Backend/requirements.txt" .
+COPY ["Medi_Buddy_Chatbot Backend/requirements.txt", "./"]
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend code
-COPY "Medi_Buddy_Chatbot Backend/" .
+COPY ["Medi_Buddy_Chatbot Backend/", "./"]
 
 # Expose port
 EXPOSE 5000

@@ -1,0 +1,125 @@
+# 🚀 MEDI BUDDY CHATBOT - ENVIRONMENT VARIABLES
+# Copy these values when setting up your deployment
+
+# ========================================
+# BACKEND ENVIRONMENT VARIABLES
+# ========================================
+
+# 1. OPENAI_API_KEY (Required)
+# Get this from: https://platform.openai.com/api-keys
+# Value: sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_API_KEY=your_openai_api_key_here
+
+# 2. SECRET_KEY (Required)
+# Generated secure key for Flask sessions
+SECRET_KEY=af0785f0283c049e88cd2f61c0e9dbaef6495a4d120085866915e1210590b47c
+
+# 3. PORT (Optional - usually auto-set by hosting platform)
+PORT=5000
+
+# ========================================
+# FRONTEND ENVIRONMENT VARIABLES
+# ========================================
+
+# 4. BACKEND_URL (Required)
+# This will be your backend service URL after deployment
+# Examples:
+# - Render: https://medi-buddy-backend.onrender.com
+# - Railway: https://your-app-name.railway.app
+# - Heroku: https://your-app-name.herokuapp.com
+BACKEND_URL=https://your-backend-url-here.com
+
+# 5. NODE_ENV (Required for production)
+NODE_ENV=production
+
+# ========================================
+# DEPLOYMENT PLATFORMS
+# ========================================
+
+# RENDER (Recommended - Free)
+# 1. Go to: https://render.com
+# 2. Sign up with GitHub
+# 3. Create 2 web services:
+#    - Backend: Python, Root: "Medi_Buddy_Chatbot Backend"
+#    - Frontend: Node, Root: "Medi_buddy_chatbot-frontend"
+# 4. Set environment variables for each service
+
+# RAILWAY (Free Tier)
+# 1. Go to: https://railway.app
+# 2. Connect GitHub repository
+# 3. Deploy backend first, then frontend
+# 4. Set environment variables in Railway dashboard
+
+# HEROKU (Paid)
+# 1. Install Heroku CLI
+# 2. Use commands:
+#    heroku config:set OPENAI_API_KEY=your_key
+#    heroku config:set SECRET_KEY=your_secret
+#    heroku config:set BACKEND_URL=your_backend_url
+
+# ========================================
+# STEP-BY-STEP DEPLOYMENT
+# ========================================
+
+# STEP 1: Get OpenAI API Key
+# 1. Go to https://platform.openai.com
+# 2. Sign up/Login
+# 3. Go to API Keys
+# 4. Create new secret key
+# 5. Copy the key (starts with sk-)
+
+# STEP 2: Deploy Backend
+# 1. Choose your platform (Render recommended)
+# 2. Set environment variables:
+#    - OPENAI_API_KEY = your actual API key
+#    - SECRET_KEY = af0785f0283c049e88cd2f61c0e9dbaef6495a4d120085866915e1210590b47c
+
+# STEP 3: Deploy Frontend
+# 1. After backend is deployed, get its URL
+# 2. Deploy frontend with:
+#    - BACKEND_URL = your backend URL
+#    - NODE_ENV = production
+
+# STEP 4: Test
+# 1. Visit your frontend URL
+# 2. Test the chatbot
+# 3. Check logs if there are issues
+
+# ========================================
+# TROUBLESHOOTING
+# ========================================
+
+# Common Issues:
+# 1. CORS Error: Check BACKEND_URL is correct
+# 2. API Key Error: Verify OPENAI_API_KEY is set correctly
+# 3. Build Failure: Check requirements.txt and package.json
+# 4. Connection Timeout: Check if both services are running
+
+# Health Checks:
+# - Backend: https://your-backend-url/health
+# - Frontend: https://your-frontend-url
+
+# ========================================
+# SECURITY NOTES
+# ========================================
+
+# ✅ Never commit API keys to Git
+# ✅ Use different SECRET_KEY for production
+# ✅ Monitor API usage in OpenAI dashboard
+# ✅ Set usage limits to prevent overcharges
+# ✅ Rotate keys regularly
+
+# ========================================
+# COST ESTIMATION
+# ========================================
+
+# OpenAI API Costs:
+# - GPT-3.5-turbo: ~$0.002 per 1K tokens
+# - Typical chat: 100-500 tokens per message
+# - Estimated cost: $1-5/month for moderate usage
+
+# Hosting Costs:
+# - Render: Free (750 hours/month)
+# - Railway: Free (500 hours/month)
+# - Heroku: $7/month
+# - DigitalOcean: $5-10/month 
