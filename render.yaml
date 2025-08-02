@@ -19,6 +19,7 @@ services:
     name: medi-buddy-frontend
     env: node
     plan: free
+    rootDir: Medi_buddy_chatbot-frontend
     buildCommand: npm install
     startCommand: npm start
     envVars:
