@@ -1,0 +1,13 @@
+services:
+  # Frontend Service (Node.js)
+  - type: web
+    name: medi-buddy-frontend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BACKEND_URL
+        value: https://medi-buddy-backend.onrender.com 
