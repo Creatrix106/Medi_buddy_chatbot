@@ -44,14 +44,26 @@ async function sendDataToFlask(Prompt) {
   // Use environment variable for backend URL or default to localhost
   const backendUrl = process.env.BACKEND_URL || 'http://127.0.0.1:5000';
   
-  const response = await axios.post(`${backendUrl}/chat`, Prompt, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  console.log('Response from Flask:', response.data);
-  FlaskResponse = response.data;
-  console.log(FlaskResponse.response, "Response received")
-
-  return response.data;
+  console.log('=== BACKEND COMMUNICATION DEBUG ===');
+  console.log('Backend URL:', backendUrl);
+  console.log('Sending request to:', `${backendUrl}/chat`);
+  console.log('Request payload:', Prompt);
+  
+  try {
+    const response = await axios.post(`${backendUrl}/chat`, Prompt, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log('Response from Flask:', response.data);
+    FlaskResponse = response.data;
+    console.log(FlaskResponse.response, "Response received");
+    return response.data;
+  } catch (error) {
+    console.error('=== BACKEND COMMUNICATION ERROR ===');
+    console.error('Error details:', error.message);
+    console.error('Error response:', error.response?.data);
+    console.error('Error status:', error.response?.status);
+    throw error;
+  }
 } 
