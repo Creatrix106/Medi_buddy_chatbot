@@ -1,0 +1,28 @@
+services:
+  # Backend Service (Flask)
+  - type: web
+    name: medi-buddy-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.9.16
+
+  # Frontend Service (Node.js)
+  - type: web
+    name: medi-buddy-frontend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BACKEND_URL
+        value: https://medi-buddy-backend.onrender.com 
