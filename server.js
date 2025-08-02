@@ -7,6 +7,12 @@ app.use(express.json());
 
 let FlaskResponse;
 
+// Debug logging
+console.log('=== DEBUG INFO ===');
+console.log('Current directory (__dirname):', __dirname);
+console.log('Looking for public directory at:', path.join(__dirname, 'public'));
+console.log('Looking for index.html at:', path.join(__dirname, 'public', 'index.html'));
+
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
