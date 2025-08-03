@@ -33,7 +33,7 @@ Medi_buddy_chatbot-stack/
 ### Prerequisites
 - Python 3.8+
 - Node.js 14+
-- OpenAI API key
+- Gemini API key (from Google AI Studio)
 
 ### Automated Setup (Recommended)
 
@@ -73,7 +73,7 @@ chmod +x setup.sh
 
 5. **Configure environment:**
    - Edit `api.env` file
-   - Add your OpenAI API key: `OPENAI_API_KEY=your_actual_api_key_here`
+   - Add your Gemini API key: `GEMINI_API_KEY=your_actual_api_key_here`
 
 6. **Run the backend:**
    ```bash
@@ -126,7 +126,7 @@ chmod +x start_servers.sh
 ## 🎨 Features
 
 - **Modern Chat Interface**: Clean, responsive design
-- **AI-Powered Responses**: Uses OpenAI GPT-3.5-turbo
+- **AI-Powered Responses**: Uses Google Gemini 1.5 Flash
 - **Character Personality**: Lady Tsunade from Naruto
 - **Session Management**: Maintains conversation history
 - **Error Handling**: Robust error handling and user feedback
@@ -136,7 +136,7 @@ chmod +x start_servers.sh
 
 ### Backend
 - **Flask**: Python web framework
-- **OpenAI**: AI language model
+- **Google Gemini**: AI language model
 - **Flask-CORS**: Cross-origin resource sharing
 - **python-dotenv**: Environment variable management
 
@@ -150,10 +150,10 @@ chmod +x start_servers.sh
 
 ### Common Issues
 
-1. **OpenAI API Error**
+1. **Gemini API Error**
    - Ensure your API key is correctly set in `api.env`
-   - Check if you have sufficient credits in your OpenAI account
-   - Verify the API key format starts with `sk-`
+   - Check if you have sufficient credits in your Google AI account
+   - Verify the API key is valid from Google AI Studio
 
 2. **Connection Error**
    - Make sure both backend (port 5000) and frontend (port 3000) are running
@@ -187,7 +187,7 @@ chmod +x start_servers.sh
 3. Styling changes: Modify `style.css`
 
 ### Environment Variables
-- `OPENAI_API_KEY`: Your OpenAI API key
+- `GEMINI_API_KEY`: Your Gemini API key
 - `SECRET_KEY`: Flask session secret (change in production)
 - `PORT`: Server port (default: 5000)
 

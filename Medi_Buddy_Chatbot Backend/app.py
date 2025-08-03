@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, session
 from flask_cors import CORS
-import openai, os
+import google.generativeai as genai
+import os
 from dotenv import load_dotenv
 
 # Load .env file locally (for development)
@@ -11,8 +12,8 @@ app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'https://medi-buddy-frontend.onrender.com'], supports_credentials=True)  # allow frontend calls
 app.secret_key = os.getenv("SECRET_KEY", "super-secret-key")  # needed for sessions
 
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Configure Gemini
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -29,50 +30,59 @@ def chat():
         if not user_input:
             return jsonify({"error": "Message is required"}), 400
 
-        # Check if OpenAI API key is set
-        if not openai.api_key:
-            print("ERROR: OpenAI API key is not set")
-            return jsonify({"error": "OpenAI API key is not configured"}), 500
+        # Check if Gemini API key is set
+        if not os.getenv("GEMINI_API_KEY"):
+            print("ERROR: Gemini API key is not set")
+            return jsonify({"error": "Gemini API key is not configured"}), 500
 
+        # Initialize chat if not exists
+        if 'chat_session' not in session:
+            # Create a new chat session with Lady Tsunade personality
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            session['chat_session'] = model.start_chat(history=[])
+            
+            # Set the personality context
+            personality_prompt = """You are MediBuddy, a medical assistant with Lady Tsunade's personality from Naruto. 
+            
+            Your personality traits:
+            - Confident and authoritative like Lady Tsunade
+            - Caring and nurturing towards patients
+            - Occasionally stern when needed, especially about medical safety
+            - Has a touch of humor and warmth
+            - Very knowledgeable about medicine and healing
+            - Speaks with confidence and occasionally uses medical terminology
+            - Shows concern for patient well-being
+            - May occasionally reference your "medical ninja" skills in a light-hearted way
+            
+            You provide medical help in a friendly but professional tone. Always prioritize patient safety and recommend consulting a doctor for serious conditions. You can help with:
+            - General health advice
+            - Symptom explanations
+            - Basic first aid guidance
+            - Medication information
+            - Lifestyle recommendations
+            
+            Remember: You're not a replacement for professional medical care, especially for serious conditions."""
+            
+            # Send the personality prompt to set the context
+            session['chat_session'].send_message(personality_prompt)
+
+        # Send user message to Gemini
+        print(f"Sending request to Gemini: {user_input}")
+        response = session['chat_session'].send_message(user_input)
         
-        if 'history' not in session:
-            session['history'] = [
-                {"role": "system", "content": 
-                 "You are MediBuddy, a medical assistant with Lady Tsunade's personality from Naruto: "
-                 "confident, caring, occasionally stern, with a touch of humor. "
-                 "You provide medical help in a friendly tone."}
-            ]
-
-        # Add user message to memory
-        session['history'].append({"role": "user", "content": user_input})
-
-        # Limit to last 10 messages (avoid token overload)
-        session['history'] = session['history'][-10:]
-
-        # Send to OpenAI
-        print(f"Sending request to OpenAI with {len(session['history'])} messages")
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=session['history']
-        )
-
-        bot_reply = response.choices[0].message['content']
-        session['history'].append({"role": "assistant", "content": bot_reply})
+        bot_reply = response.text
+        print(f"Gemini response: {bot_reply}")
 
         return jsonify({"response": bot_reply})
 
-    except openai.error.OpenAIError as e:
-        print(f"OpenAI API error: {str(e)}")
-        return jsonify({"error": f"OpenAI API error: {str(e)}"}), 500
     except Exception as e:
         print(f"Server error: {str(e)}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-
 @app.route('/reset', methods=['POST'])
 def reset_chat():
     """Optional endpoint to reset memory"""
-    session.pop('history', None)
+    session.pop('chat_session', None)
     return jsonify({"status": "Chat memory cleared"})
 
 if __name__ == '__main__':

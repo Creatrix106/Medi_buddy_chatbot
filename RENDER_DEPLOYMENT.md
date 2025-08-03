@@ -4,7 +4,7 @@
 
 ### Prerequisites
 - GitHub repository with your code
-- OpenAI API key
+- Gemini API key (from Google AI Studio)
 - Render account (free tier available)
 
 ## 📋 Backend Deployment (Flask)
@@ -32,7 +32,7 @@
    - Go to "Environment" tab
    - Add these variables:
    ```
-   OPENAI_API_KEY = your_actual_openai_api_key_here
+   GEMINI_API_KEY = your_actual_gemini_api_key_here
    SECRET_KEY = af0785f0283c049e88cd2f61c0e9dbaef6495a4d120085866915e1210590b47c
    PYTHON_VERSION = 3.10.12
    ```
@@ -74,7 +74,7 @@
 
 ### Backend Variables
 ```bash
-OPENAI_API_KEY=sk-your-actual-api-key-here
+GEMINI_API_KEY=your-actual-gemini-api-key-here
 SECRET_KEY=af0785f0283c049e88cd2f61c0e9dbaef6495a4d120085866915e1210590b47c
 PYTHON_VERSION=3.10.12
 ```
@@ -89,10 +89,10 @@ BACKEND_URL=https://your-backend-service-url.onrender.com
 
 ### Common Issues
 
-1. **OpenAI API Error**
-   - ✅ Ensure `OPENAI_API_KEY` is set correctly in backend environment
-   - ✅ Check that the API key starts with `sk-`
-   - ✅ Verify you have credits in your OpenAI account
+1. **Gemini API Error**
+   - ✅ Ensure `GEMINI_API_KEY` is set correctly in backend environment
+   - ✅ Check that the API key is valid from Google AI Studio
+   - ✅ Verify you have credits in your Google AI account
 
 2. **CORS Error**
    - ✅ Backend CORS is configured for Render domains
@@ -130,7 +130,7 @@ https://your-frontend-url.onrender.com/health
    - Check for error messages
 
 2. **Common Log Messages**
-   - `OpenAI API error`: Check API key and credits
+   - `Gemini API error`: Check API key and credits
    - `Failed to communicate with Flask`: Check BACKEND_URL
    - `Module not found`: Check requirements.txt and package.json
 
@@ -176,4 +176,4 @@ If issues persist:
 1. Check Render logs for specific error messages
 2. Verify all environment variables are set
 3. Test backend health endpoint
-4. Check OpenAI API key and credits 
+4. Check Gemini API key and credits 
