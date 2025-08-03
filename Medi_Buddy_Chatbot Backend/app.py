@@ -20,6 +20,35 @@ def health_check():
     """Health check endpoint"""
     return jsonify({"status": "healthy", "message": "MediBuddy API is running"})
 
+@app.route('/test', methods=['GET'])
+def test_endpoint():
+    """Test endpoint to verify API key and basic functionality"""
+    try:
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            return jsonify({"error": "GEMINI_API_KEY not set", "status": "error"}), 500
+        
+        # Test Gemini connection
+        import google.generativeai as genai
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        # Simple test response
+        response = model.generate_content("Say 'Hello from MediBuddy!'")
+        
+        return jsonify({
+            "status": "success",
+            "message": "Gemini API is working",
+            "test_response": response.text,
+            "api_key_set": bool(api_key)
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "error": str(e),
+            "api_key_set": bool(os.getenv("GEMINI_API_KEY"))
+        }), 500
+
 @app.route('/chat', methods=['POST'])
 def chat():
     try:

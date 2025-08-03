@@ -31,14 +31,22 @@ app.get('/health', (req, res) => {
 
 app.post('/userinput', (req, res) => {
   const UserInput = req.body;
-  console.log('Data Received from User', UserInput);
+  console.log('=== FRONTEND REQUEST DEBUG ===');
+  console.log('Data Received from User:', UserInput);
+  console.log('Backend URL from env:', process.env.BACKEND_URL);
 
   sendDataToFlask(UserInput)
     .then(flaskResponse => {
+      console.log('=== SUCCESS RESPONSE ===');
+      console.log('Flask response received:', flaskResponse);
       res.status(200).send({ flaskResponse });
     })
     .catch(error => {
-      console.error('Error communicating with Flask:', error);
+      console.error('=== FRONTEND ERROR ===');
+      console.error('Error communicating with Flask:', error.message);
+      console.error('Error response data:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+      console.error('Error config:', error.config);
       res.status(500).send({ error: 'Failed to communicate with Flask server' });
     });
 });
