@@ -9,7 +9,7 @@ gnome-terminal --title="Backend Server" -- bash -c "python app.py; exec bash" &
 
 echo
 echo "Starting Frontend Server (Node.js)..."
-cd "../Medi_buddy_chatbot-frontend"
+cd ".."
 gnome-terminal --title="Frontend Server" -- bash -c "npm run dev; exec bash" &
 
 echo

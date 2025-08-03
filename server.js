@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -20,6 +21,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy', 
+    message: 'MediBuddy Frontend is running',
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.post('/userinput', (req, res) => {
   const UserInput = req.body;
   console.log('Data Received from User', UserInput);
@@ -37,8 +46,6 @@ app.post('/userinput', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port 'http://localhost:${PORT}'`);
 });
-
-const axios = require('axios');
 
 async function sendDataToFlask(Prompt) {
   // Use environment variable for backend URL or default to localhost

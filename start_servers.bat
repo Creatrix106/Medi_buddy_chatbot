@@ -8,7 +8,7 @@ start "Backend Server" cmd /k "python app.py"
 
 echo.
 echo Starting Frontend Server (Node.js)...
-cd "../Medi_buddy_chatbot-frontend"
+cd ".."
 start "Frontend Server" cmd /k "npm run dev"
 
 echo.

@@ -29,12 +29,17 @@ const MediBotResponse = async (incomingMessageDiv) => {
         const response = await fetch('/userinput', requestOptions);
         const data = await response.json();
         if(!response.ok) throw new Error(data.error || 'Failed to get response');
-        BotReply = data.flaskResponse.response;
-        messageElement.innerText = BotReply;
-        console.log('Bot Reply:', BotReply);
+        
+        if (data.flaskResponse && data.flaskResponse.response) {
+            BotReply = data.flaskResponse.response;
+            messageElement.innerText = BotReply;
+            console.log('Bot Reply:', BotReply);
+        } else {
+            throw new Error('Invalid response format from server');
+        }
 
     } catch (error) {
-        console.log("Error getting bot response:", error);
+        console.error("Error getting bot response:", error);
         messageElement.innerText = "Sorry, I'm having trouble responding right now. Please try again.";
     }
 }

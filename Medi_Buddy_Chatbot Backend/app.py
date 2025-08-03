@@ -3,11 +3,12 @@ from flask_cors import CORS
 import openai, os
 from dotenv import load_dotenv
 
-# Load .env file locally
-load_dotenv('api.env')
+# Load .env file locally (for development)
+# For production (Render), environment variables are set in the platform
+load_dotenv('api.env', override=False)
 
 app = Flask(__name__)
-CORS(app)  # allow frontend calls
+CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:3000', 'https://medi-buddy-frontend.onrender.com'], supports_credentials=True)  # allow frontend calls
 app.secret_key = os.getenv("SECRET_KEY", "super-secret-key")  # needed for sessions
 
 
@@ -28,6 +29,11 @@ def chat():
         if not user_input:
             return jsonify({"error": "Message is required"}), 400
 
+        # Check if OpenAI API key is set
+        if not openai.api_key:
+            print("ERROR: OpenAI API key is not set")
+            return jsonify({"error": "OpenAI API key is not configured"}), 500
+
         
         if 'history' not in session:
             session['history'] = [
@@ -44,6 +50,7 @@ def chat():
         session['history'] = session['history'][-10:]
 
         # Send to OpenAI
+        print(f"Sending request to OpenAI with {len(session['history'])} messages")
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=session['history']
@@ -54,7 +61,7 @@ def chat():
 
         return jsonify({"response": bot_reply})
 
-    except openai.OpenAIError as e:
+    except openai.APIError as e:
         print(f"OpenAI API error: {str(e)}")
         return jsonify({"error": f"OpenAI API error: {str(e)}"}), 500
     except Exception as e:

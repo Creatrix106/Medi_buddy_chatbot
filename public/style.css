@@ -101,7 +101,7 @@ body{
 }
 
 .vegito{
-    background-image: url('/assert/img/stethoscope.png');
+    background-color: #4a5be2;
     background-position: center center;
     background-size: 40px;
     height: 40px;
@@ -110,7 +110,16 @@ body{
     border-radius: 50%;
     border: 1px solid #5350c4;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
 
+.vegito::before {
+    content: "🏥";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
 }
 
 .chat-body .user-message{

@@ -35,7 +35,22 @@ Medi_buddy_chatbot-stack/
 - Node.js 14+
 - OpenAI API key
 
-### Backend Setup
+### Automated Setup (Recommended)
+
+**Windows:**
+```bash
+setup.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+### Manual Setup
+
+#### Backend Setup
 
 1. **Navigate to backend directory:**
    ```bash
@@ -66,11 +81,11 @@ Medi_buddy_chatbot-stack/
    ```
    Backend will run on `http://localhost:5000`
 
-### Frontend Setup
+#### Frontend Setup
 
-1. **Navigate to frontend directory:**
+1. **Navigate to root directory:**
    ```bash
-   cd Medi_buddy_chatbot-frontend
+   cd ..
    ```
 
 2. **Install dependencies:**
@@ -83,6 +98,19 @@ Medi_buddy_chatbot-stack/
    npm run dev
    ```
    Frontend will run on `http://localhost:3000`
+
+### Quick Start Both Servers
+
+**Windows:**
+```bash
+start_servers.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x start_servers.sh
+./start_servers.sh
+```
 
 ## 🔧 API Endpoints
 
@@ -125,13 +153,26 @@ Medi_buddy_chatbot-stack/
 1. **OpenAI API Error**
    - Ensure your API key is correctly set in `api.env`
    - Check if you have sufficient credits in your OpenAI account
+   - Verify the API key format starts with `sk-`
 
 2. **Connection Error**
    - Make sure both backend (port 5000) and frontend (port 3000) are running
    - Check if ports are not being used by other applications
+   - Use the provided start scripts: `start_servers.bat` or `start_servers.sh`
 
 3. **CORS Error**
-   - Backend has CORS enabled, but ensure frontend is making requests to correct URL
+   - Backend has CORS enabled for localhost:3000
+   - Ensure frontend is running on the correct port
+   - Check browser console for specific error messages
+
+4. **Missing Dependencies**
+   - Run the setup script: `setup.bat` or `setup.sh`
+   - Ensure virtual environment is activated for backend
+   - Run `npm install` in the root directory for frontend
+
+5. **Image Loading Issues**
+   - The app now uses emoji icons instead of image files
+   - If you prefer custom images, add them to `public/assert/img/`
 
 ### Health Checks
 
