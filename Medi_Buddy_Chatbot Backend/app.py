@@ -51,7 +51,7 @@ def chat():
 
         # Send to OpenAI
         print(f"Sending request to OpenAI with {len(session['history'])} messages")
-        response = openai.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=session['history']
         )
@@ -61,7 +61,7 @@ def chat():
 
         return jsonify({"response": bot_reply})
 
-    except openai.APIError as e:
+    except openai.error.OpenAIError as e:
         print(f"OpenAI API error: {str(e)}")
         return jsonify({"error": f"OpenAI API error: {str(e)}"}), 500
     except Exception as e:
