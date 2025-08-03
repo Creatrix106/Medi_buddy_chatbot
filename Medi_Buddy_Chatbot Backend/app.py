@@ -122,4 +122,7 @@ def reset_chat():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
+    print("=== MEDIBUDDY BACKEND STARTING ===")
+    print(f"Using Gemini API: {bool(os.getenv('GEMINI_API_KEY'))}")
+    print(f"Port: {port}")
     app.run(host='0.0.0.0', port=port, debug=False)
