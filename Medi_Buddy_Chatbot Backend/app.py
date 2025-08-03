@@ -59,6 +59,12 @@ def chat():
         if not user_input:
             return jsonify({"error": "Message is required"}), 400
 
+        # Debug: Print environment variables
+        print("=== BACKEND DEBUG ===")
+        print(f"GEMINI_API_KEY set: {bool(os.getenv('GEMINI_API_KEY'))}")
+        print(f"OPENAI_API_KEY set: {bool(os.getenv('OPENAI_API_KEY'))}")
+        print(f"User input: {user_input}")
+
         # Check if Gemini API key is set
         if not os.getenv("GEMINI_API_KEY"):
             print("ERROR: Gemini API key is not set")
